@@ -1,0 +1,7 @@
+framework:
+    mailer:
+        dsn: '%env(MAILER_DSN)%'
+        envelope:
+            sender: 'hereo.team@gmail.com'
+        headers:
+            From: 'Here#O Team <hereo.team@gmail.com>'
