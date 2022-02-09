@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Quest;
+use App\Form\NewQuestForm;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -15,6 +17,40 @@ class QuestController extends AbstractController
 {
 
     /**
+     * @Route("/new", name="new")
+     */
+    public function createAction(ManagerRegistry $doctrine, Request $request) {
+
+        $form = $this->createForm(NewQuestForm::class);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $quest = $form->getData();
+            $quest->setPeopleNumber(0);
+
+            $entityManager = $doctrine->getManager();
+            $entityManager->persist($quest);
+            $entityManager->flush();
+
+            $this->addFlash(
+                "success",
+                'Quest "' . $quest->getTitle() . '" has been created.'
+            );
+
+            return $this->redirectToRoute("quest_all");
+        }
+
+        return $this->renderForm(
+            'quest/new.html.twig',
+            [
+                'form' => $form,
+            ]
+        );
+    }
+
+    /**
      * @Route("/all", name="all")
      *
      * @param ManagerRegistry $doctrine
@@ -23,7 +59,7 @@ class QuestController extends AbstractController
      */
     public function showAction(ManagerRegistry $doctrine): Response
     {
-        $quests = $doctrine->getRepository(Quest::class)->findAll();
+        $quests = $doctrine->getRepository(Quest::class)->findBy([], ['date' => 'ASC']);
 
         return $this->render(
             'quest/list.html.twig',
