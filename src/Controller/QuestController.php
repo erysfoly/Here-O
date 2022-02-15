@@ -36,7 +36,7 @@ class QuestController extends AbstractController
 
             $this->addFlash(
                 "success",
-                'Quest "' . $quest->getTitle() . '" has been created.'
+                'La quête "' . $quest->getTitle() . '" a bien été créée.'
             );
 
             return $this->redirectToRoute("quest_all");
@@ -87,7 +87,7 @@ class QuestController extends AbstractController
         $entityManager->flush();
         $this->addFlash(
             "success",
-            'Your registration to the quest "' . $quest->getTitle() . '" has been successful.'
+            'Ta participation à la quête "' . $quest->getTitle() . '" a bien été enregistrée.'
         );
 
         return $this->redirect($this->generateUrl('quest_all'));

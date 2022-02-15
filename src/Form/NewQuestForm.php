@@ -17,11 +17,12 @@ class NewQuestForm extends AbstractType
     {
         $builder
             ->add('title', TextType::class, [
+                'label' => 'Titre',
                 'label_attr' => [
                     'class' => 'px-3 w-25',
                 ],
                 'attr' => [
-                    'placeholder' => 'Title',
+                    'placeholder' => 'Donne un titre à ta quête.',
                     'class' => 'w-75',
                 ],
                 'row_attr' => [
@@ -29,11 +30,12 @@ class NewQuestForm extends AbstractType
                 ],
             ])
             ->add('author', TextType::class, [
+                'label' => 'Auteur.rice',
                 'label_attr' => [
                     'class' => 'px-3 w-25',
                 ],
                 'attr' => [
-                    'placeholder' => 'Author',
+                    'placeholder' => 'Indique ton prénom ou pseudo ici.',
                     'class' => 'w-75',
                 ],
                 'row_attr' => [
@@ -45,7 +47,7 @@ class NewQuestForm extends AbstractType
                     'class' => 'px-3 w-25',
                 ],
                 'attr' => [
-                    'placeholder' => 'Tell us about you quest ! What\'s its goal, where is it, how long time? etc.',
+                    'placeholder' => 'Dis-nous en plus sur ta quête ! Quel est son but, où a-t-elle lieu, pendant combien de temps, quelles sont les missions à accomplir ? etc.',
                     'class' => 'w-75',
                 ],
                 'row_attr' => [
@@ -64,11 +66,12 @@ class NewQuestForm extends AbstractType
                 ],
             ])
             ->add('place', TextType::class, [
+                'label' => 'Lieu',
                 'label_attr' => [
                     'class' => 'px-3 w-25',
                 ],
                 'attr' => [
-                    'placeholder' => 'Place',
+                    'placeholder' => 'Indique ici le lieu de ta quête.',
                     'class' => 'w-75',
                 ],
                 'row_attr' => [
@@ -76,7 +79,7 @@ class NewQuestForm extends AbstractType
                 ],
             ])
             ->add('save', SubmitType::class, [
-                'label' => 'Create new quest',
+                'label' => 'Crée ta quête maintenant',
                 'attr' => [
                     'class' => 'btn btn-primary align-text-top',
                 ],

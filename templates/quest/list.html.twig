@@ -3,101 +3,97 @@
 {% block title %}{{ parent() }} | Liste des quêtes{% endblock %}
 
 {% block body %}
-
-        {% for label, messages in app.flashes %}
-            {% for message in messages %}
-                <div class="alert alert-{{ label }} text-center col-lg-6 col-md-8 mx-auto">
-                    {{ message }}
-                </div>
-            {% endfor %}
-        {% endfor %}
-
-
-        <div class="container">
-            <h2>All quests</h2>
-            <p>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam cum debitis doloribus ea eius eligendi id inventore ipsa, ipsam labore molestiae, mollitia, nisi obcaecati omnis pariatur qui quos sunt voluptate.
-            </p>
-            <div class="pb-5 text-center">
-                <a class="btn btn-primary" href="{{ path("quest_new") }}">Add new quest</a>
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="alert alert-{{ label }} text-center col-lg-6 col-md-8 mx-auto">
+                {{ message }}
             </div>
-            {% if quests is not empty %}
-                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-                    {% for quest in quests %}
-                        <div class="col">
-                            <div class="card shadow-sm">
-                                <!--<svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
-                                    <title>Placeholder</title>
-                                    <rect width="100%" height="100%" fill="#55595c"/>
-                                    <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
-                                </svg>-->
-                                <img src="https://cdn.pixabay.com/photo/2018/12/14/11/55/volunteers-3874924_960_720.png" alt="Nouvelle quête">
-                                <!--<img src="https://fotomelia.com/wp-content/uploads/2016/06/photos-gratuites-libres-de-droits-94-1560x1560.jpg" class="w-50 mx-auto" alt="Nouvelle quête">-->
+        {% endfor %}
+    {% endfor %}
 
-                                <div class="card-body">
-                                    <h3>{{ quest.title }}</h3>
-                                    <p class="card-text">
-                                        {% if quest.description|length > 20 %}
-                                            {{ quest.description | slice(0, 50) }}...
-                                        {% else %}
-                                            {{ quest.description }}
-                                        {% endif %}
-                                    </p>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#detailModal{{ quest.id }}">See details</button>
-                                            <!--<button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>-->
-                                        </div>
-                                        <small class="text-muted">{{ quest.peopleNumber }} participants</small>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Modal -->
-                        <div class="modal fade" id="detailModal{{ quest.id }}" tabindex="-1" aria-labelledby="detailModal{{ quest.id }}Label" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="detailModal{{ quest.id }}Label">{{ quest.title }}</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <p>
-                                            <strong>Auteur :</strong>
-                                            {{ quest.author }}
-                                        </p>
-                                        <p>
-                                            <strong>Jour et heure :</strong>
-                                            {{ quest.date|date("d/m/Y") }} at {{ quest.date|date("G:i") }}
-                                        </p>
-                                        <p>
-                                            <strong>Lieu :</strong>
-                                            {{ quest.place }}
-                                        </p>
-                                        <p>
-                                            <strong>Nombre de participants :</strong>
-                                            {{ quest.peopleNumber }}
-                                        </p>
-                                        <p>
-                                            <strong>Description :</strong><br/>
-                                            {{ quest.description }}
-                                        </p>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                        <a class="btn btn-primary" href="{{ path("quest_participate", {id: quest.id}) }}">Participate</a>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                    {% endfor %}
-                </div>
-            {% else %}
-                <p>No quest found.</p>
-            {% endif %}
-
+    <div class="container">
+        <h2>Toutes les quêtes</h2>
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam cum debitis doloribus ea eius eligendi id inventore ipsa, ipsam labore molestiae, mollitia, nisi obcaecati omnis pariatur qui quos sunt voluptate.
+        </p>
+        <div class="pb-5 text-center">
+            <a class="btn btn-primary" href="{{ path("quest_new") }}">Ajoute une nouvelle quête</a>
         </div>
+        {% if quests is not empty %}
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                {% for quest in quests %}
+                    <div class="col">
+                        <div class="card shadow-sm">
+                            <!--<svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
+                                <title>Placeholder</title>
+                                <rect width="100%" height="100%" fill="#55595c"/>
+                                <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
+                            </svg>-->
+                            <img src="https://cdn.pixabay.com/photo/2018/12/14/11/55/volunteers-3874924_960_720.png" alt="Nouvelle quête">
+                            <!--<img src="https://fotomelia.com/wp-content/uploads/2016/06/photos-gratuites-libres-de-droits-94-1560x1560.jpg" class="w-50 mx-auto" alt="Nouvelle quête">-->
 
+                            <div class="card-body">
+                                <h3>{{ quest.title }}</h3>
+                                <p class="card-text">
+                                    {% if quest.description|length > 20 %}
+                                        {{ quest.description | slice(0, 50) }}...
+                                    {% else %}
+                                        {{ quest.description }}
+                                    {% endif %}
+                                </p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#detailModal{{ quest.id }}">See details</button>
+                                        <!--<button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>-->
+                                    </div>
+                                    <small class="text-muted">{{ quest.peopleNumber }} participants</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="detailModal{{ quest.id }}" tabindex="-1" aria-labelledby="detailModal{{ quest.id }}Label" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="detailModal{{ quest.id }}Label">{{ quest.title }}</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>
+                                        <strong>Auteur :</strong>
+                                        {{ quest.author }}
+                                    </p>
+                                    <p>
+                                        <strong>Jour et heure :</strong>
+                                        {{ quest.date|date("d/m/Y") }} at {{ quest.date|date("G:i") }}
+                                    </p>
+                                    <p>
+                                        <strong>Lieu :</strong>
+                                        {{ quest.place }}
+                                    </p>
+                                    <p>
+                                        <strong>Nombre de participants :</strong>
+                                        {{ quest.peopleNumber }}
+                                    </p>
+                                    <p>
+                                        <strong>Description :</strong><br/>
+                                        {{ quest.description }}
+                                    </p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                                    <a class="btn btn-primary" href="{{ path("quest_participate", {id: quest.id}) }}">Participer</a>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>Aucune quête trouvée.</p>
+        {% endif %}
+    </div>
 {% endblock %}
