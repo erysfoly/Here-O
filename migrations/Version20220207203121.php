@@ -26,7 +26,7 @@ final class Version20220207203121 extends AbstractMigration
                 title VARCHAR(100) NOT NULL, 
                 author VARCHAR(50) NOT NULL, 
                 description VARCHAR(1000) NOT NULL, 
-                date DATETIME NOT NULL, 
+                date TIMESTAMP NOT NULL, 
                 place VARCHAR(255) NOT NULL, 
                 people_number INT NOT NULL
             )'
