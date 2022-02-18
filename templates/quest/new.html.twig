@@ -1,5 +1,20 @@
 {% extends "base.html.twig" %}
 
+{% block title %}{{ parent() }} | Ajout d'une quête{% endblock %}
+
+{% form_theme form _self %}
+
+{%- block choice_widget_expanded -%}
+    <div {{ block('widget_container_attributes') }}>
+        {%- for child in form %}
+            <div class="w-50 d-flex pb-2">
+                {{ form_widget(child) }}
+                {{ form_label(child) }}
+            </div>
+        {% endfor -%}
+    </div>
+{%- endblock choice_widget_expanded -%}
+
 {% block body %}
     <div class="container">
         <h2>Crée une quête</h2>

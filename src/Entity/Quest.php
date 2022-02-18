@@ -48,6 +48,11 @@ class Quest {
     private int $peopleNumber;
 
     /**
+     * @ORM\Column(type="string", length=255, options={"default" : "https://cdn.pixabay.com/photo/2018/12/14/11/55/volunteers-3874924_960_720.png"})
+     */
+    private string $picture;
+
+    /**
      * @return int
      */
     public function getId(): int
@@ -149,5 +154,17 @@ class Quest {
     public function setPeopleNumber(int $peopleNumber): void
     {
         $this->peopleNumber = $peopleNumber;
+    }
+
+    public function getPicture(): string
+    {
+        return $this->picture;
+    }
+
+    public function setPicture(string $picture): self
+    {
+        $this->picture = $picture;
+
+        return $this;
     }
 }
