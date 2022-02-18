@@ -29,9 +29,7 @@ final class Version20220207203121 extends AbstractMigration
                 date DATETIME NOT NULL, 
                 place VARCHAR(255) NOT NULL, 
                 people_number INT NOT NULL
-            ) 
-            WITH 
-                ENCODING \'UTF8\''
+            )'
         );
     }
 
