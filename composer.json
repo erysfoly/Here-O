@@ -22,11 +22,11 @@
         "symfony/proxy-manager-bridge": "5.4.*",
         "symfony/runtime": "5.4.*",
         "symfony/twig-bundle": "5.4.*",
-        "symfony/yaml": "5.4.*"
-    },
-    "require-dev": {
+        "symfony/yaml": "5.4.*",
         "doctrine/doctrine-fixtures-bundle": "^3.4",
         "symfony/maker-bundle": "^1.36"
+    },
+    "require-dev": {
     },
     "config": {
         "allow-plugins": {
