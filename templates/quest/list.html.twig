@@ -3,13 +3,7 @@
 {% block title %}{{ parent() }} | Liste des quêtes{% endblock %}
 
 {% block body %}
-    {% for label, messages in app.flashes %}
-        {% for message in messages %}
-            <div class="alert alert-{{ label }} text-center col-lg-6 col-md-8 mx-auto">
-                {{ message }}
-            </div>
-        {% endfor %}
-    {% endfor %}
+    {{ parent() }}
 
     <div class="container">
         <h2>Toutes les quêtes</h2>

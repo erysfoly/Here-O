@@ -25,7 +25,13 @@
         <main>
             <div class="album py-5 bg-light">
                 {% block body %}
-
+                    {% for label, messages in app.flashes %}
+                        {% for message in messages %}
+                            <div class="alert alert-{{ label }} text-center col-lg-6 col-md-8 mx-auto" role="alert">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
                 {% endblock %}
             </div>
         </main>
