@@ -30,19 +30,6 @@ class NewQuestForm extends AbstractType
                     'class' => 'py-1',
                 ],
             ])
-            ->add('author', TextType::class, [
-                'label' => 'Auteur.rice',
-                'label_attr' => [
-                    'class' => 'px-3 w-25',
-                ],
-                'attr' => [
-                    'placeholder' => 'Indique ton prénom ou pseudo ici.',
-                    'class' => 'w-75',
-                ],
-                'row_attr' => [
-                    'class' => 'py-1',
-                ],
-            ])
             ->add('description', TextareaType::class, [
                 'label_attr' => [
                     'class' => 'px-3 w-25',

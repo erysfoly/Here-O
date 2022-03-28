@@ -19,7 +19,17 @@
     <div class="container">
         <h2>Crée une quête</h2>
         <div class="w-50 m-auto">
-            {{ form(form) }}
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                {{ form(form) }}
+            {% else %}
+                <p>
+                    Tu dois être connecté.e pour créer une nouvelle quête.
+                </p>
+                <p>
+                    <a class="btn btn-primary" href="{{ path("app_login") }}" title="Se connecter">Je me connecte !</a>
+                    <a class="btn btn-primary" href="{{ path("app_register") }}" title="Créer un compte">Je n'ai pas de compte, j'en crée un !</a>
+                </p>
+            {% endif %}
         </div>
     </div>
 {% endblock %}

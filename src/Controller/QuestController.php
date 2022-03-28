@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Quest;
+use App\Entity\User;
 use App\Form\NewQuestForm;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -27,7 +28,9 @@ class QuestController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
+            /** @var Quest $quest */
             $quest = $form->getData();
+            $quest->setAuthor($this->getUser());
             $quest->setPeopleNumber(0);
 
             $entityManager = $doctrine->getManager();
