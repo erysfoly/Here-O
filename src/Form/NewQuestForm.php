@@ -24,7 +24,7 @@ class NewQuestForm extends AbstractType
                 ],
                 'attr' => [
                     'placeholder' => 'Donne un titre à ta quête.',
-                    'class' => 'w-75',
+                    'class' => 'w-75 d-inline',
                 ],
                 'row_attr' => [
                     'class' => 'py-1',
@@ -36,7 +36,7 @@ class NewQuestForm extends AbstractType
                 ],
                 'attr' => [
                     'placeholder' => 'Dis-nous en plus sur ta quête ! Quel est son but, où a-t-elle lieu, pendant combien de temps, quelles sont les missions à accomplir ? etc.',
-                    'class' => 'w-75',
+                    'class' => 'w-75 d-inline',
                     'rows' => '5',
                 ],
                 'row_attr' => [
@@ -63,7 +63,7 @@ class NewQuestForm extends AbstractType
                 ],
                 'attr' => [
                     'placeholder' => 'Indique ici le lieu de ta quête.',
-                    'class' => 'w-75',
+                    'class' => 'w-75 d-inline',
                 ],
                 'row_attr' => [
                     'class' => 'py-1',
@@ -89,10 +89,10 @@ class NewQuestForm extends AbstractType
                 'multiple' => false,
                 'label_html' => true,
                 'choices' => [
-                    'Planète Terre' => 'https://cdn.pixabay.com/photo/2019/02/09/11/03/globe-3984876_960_720.jpg',
-                    'Bricolage' => 'https://cdn.pixabay.com/photo/2015/07/28/20/55/tools-864983_960_720.jpg',
-                    'Technologie' => 'https://cdn.pixabay.com/photo/2019/07/14/16/29/pen-4337524_960_720.jpg',
-                    'Animaux' => 'https://cdn.pixabay.com/photo/2017/08/07/18/57/dog-2606759_960_720.jpg',
+                    'Planète Terre' => '/images/globe-3984876_960_720.webp',
+                    'Bricolage' => '/images/tools-864983_960_720.webp',
+                    'Technologie' => '/images/pen-4337524_960_720.webp',
+                    'Animaux' => '/images/dog-2606759_960_720.webp',
                 ],
                 'choice_label' => function ($choice, $key, $value) {
                     return '<img src="' . $value . '" alt="' . $key . '" class="w-100" />';
