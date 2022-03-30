@@ -51,7 +51,7 @@ class Quest {
     private int $peopleNumber;
 
     /**
-     * @ORM\Column(type="string", length=255, options={"default" : "https://cdn.pixabay.com/photo/2018/12/14/11/55/volunteers-3874924_960_720.png"})
+     * @ORM\Column(type="string", length=255, options={"default" : "/images/volunteers-3874924_960_720.png"})
      */
     private string $picture;
 
