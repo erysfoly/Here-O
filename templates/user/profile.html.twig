@@ -4,6 +4,11 @@
 
 {%  block body %}
     {{ parent() }}
-    <h1>Bienvenue {{ user.username }} !</h1>
+
+    <div class="container">
+        <h2>Bienvenue {{ user.username }} !</h2>
+
+        {% include "quest/list.html.twig" %}
+    </div>
 
 {% endblock %}

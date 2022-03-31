@@ -1,0 +1,20 @@
+{% extends "base.html.twig" %}
+
+{% block title %}{{ parent() }} | Liste des quêtes{% endblock %}
+
+{% block body %}
+    {{ parent() }}
+
+<div class="container">
+    <h2>Toutes les quêtes</h2>
+    <p>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam cum debitis doloribus ea eius eligendi id inventore ipsa, ipsam labore molestiae, mollitia, nisi obcaecati omnis pariatur qui quos sunt voluptate.
+    </p>
+    <div class="pb-5 text-center">
+        <a class="btn btn-primary" href="{{ path("quest_new") }}">Ajoute une nouvelle quête</a>
+    </div>
+
+    {% include "quest/list.html.twig" %}
+
+    </div>
+{% endblock %}

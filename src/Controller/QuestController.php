@@ -65,7 +65,7 @@ class QuestController extends AbstractController
         $quests = $doctrine->getRepository(Quest::class)->findBy([], ['date' => 'ASC']);
 
         return $this->render(
-            'quest/list.html.twig',
+            'quest/index.html.twig',
             [
                 'quests' => $quests,
             ]
@@ -93,6 +93,6 @@ class QuestController extends AbstractController
             'Ta participation à la quête "' . $quest->getTitle() . '" a bien été enregistrée.'
         );
 
-        return $this->redirect($this->generateUrl('quest_all'));
+        return $this->redirectToRoute("index");
     }
 }
