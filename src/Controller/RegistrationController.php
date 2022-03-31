@@ -47,7 +47,12 @@ class RegistrationController extends AbstractController
                 $formLoginAuthenticator,
                 $request
             );
-            return $this->redirect($request->get('_target_path'));
+
+            if (str_contains($request->get('_target_path'),"new")) {
+                return $this->redirect($request->get('_target_path'));
+            }
+
+            return $this->redirectToRoute('user_profile');
         }
 
         return $this->render('registration/register.html.twig', [
