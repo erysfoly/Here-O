@@ -7,9 +7,8 @@
 {%- block choice_widget_expanded -%}
     <div {{ block('widget_container_attributes') }}>
         {%- for child in form %}
-            <div class="w-50 d-flex pb-2">
+            <div class="w-50 d-flex">
                 {{ form_widget(child) }}
-                {{ form_label(child) }}
             </div>
         {% endfor -%}
     </div>
@@ -18,9 +17,110 @@
 {% block body %}
     <div class="container">
         <h2>Crée une quête</h2>
+
         <div class="w-50 m-auto">
             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                {{ form(form) }}
+                {{ form_start(form) }}
+
+                <div id="{{ form.vars.name }}">
+                    <div class="py-1 d-flex">
+                        {{ form_label(form.title, 'Titre', {
+                            'label_attr': {
+                                'class': 'w-25'
+                            },
+                        }) }}
+                        <div class="w-75">
+                            {{ form_widget(form.title, {
+                                'attr': {
+                                    'placeholder': 'Donne un titre à ta quête.'
+                                }
+                            }) }}
+                            {{ form_errors(form.title) }}
+                        </div>
+                    </div>
+
+                    <div class="py-1 d-flex">
+                        {{ form_label(form.description, null, {
+                            'label_attr': {
+                                'class': 'w-25'
+                            },
+                        }) }}
+                        <div class="w-75">
+                            {{ form_widget(form.description, {
+                                'attr': {
+                                    'placeholder': 'Dis-nous en plus sur ta quête ! Quel est son but, où a-t-elle lieu, pendant combien de temps, quelles sont les missions à accomplir ? etc.',
+                                    'rows': '5',
+                                }
+                            }) }}
+                            {{ form_errors(form.description) }}
+                        </div>
+                    </div>
+
+                    <div class="py-1 d-flex">
+                        {{ form_label(form.date, null, {
+                            'label_attr': {
+                                'class': 'w-25 py-0'
+                            }
+                        }) }}
+                        <div class="w-75 d-flex flex-wrap">
+                            {{ form_widget(form.date.date, {
+                                'attr': {
+                                    'class': 'w-50 mr-1'
+                                }
+                            }) }}
+                            {{ form_widget(form.date.time, {
+                                'attr': {
+                                    'class': 'w-50'
+                                }
+                            }) }}
+                            {{ form_errors(form.date) }}
+                        </div>
+                    </div>
+
+                    <div class="py-1 d-flex">
+                        {{ form_label(form.place, 'Lieu', {
+                            'label_attr': {
+                                'class': 'w-25'
+                            },
+                        }) }}
+                        <div class="w-75">
+                            {{ form_widget(form.place, {
+                                'attr': {
+                                    'placeholder': 'Indique ici le lieu de ta quête.'
+                                }
+                            }) }}
+                            {{ form_errors(form.place) }}
+                        </div>
+                    </div>
+
+                    <div class="py-1 d-flex">
+                        {{ form_label(form.picture, 'Image', {
+                            'label_attr': {
+                                'class': 'w-25 py-0'
+                            }
+                        }) }}
+                        <div class="w-75">
+                            {{ form_widget(form.picture, {
+                                'attr': {
+                                    'class': 'd-flex flex-wrap'
+                                }
+                            }) }}
+                            {{ form_errors(form.picture) }}
+                        </div>
+                    </div>
+
+                    {{ form_row(form.save, {
+                        'label': 'Crée ta quête maintenant',
+                        'attr': {
+                            'class': 'btn btn-primary align-text-top'
+                        },
+                        'row_attr': {
+                            'class': 'text-center pt-3'
+                        }
+                    }) }}
+                </div>
+
+                {{ form_end(form) }}
             {% else %}
                 <p>
                     Tu dois être connecté.e pour créer une nouvelle quête.
@@ -32,4 +132,16 @@
             {% endif %}
         </div>
     </div>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("#new_quest_form_picture label").click(function () {
+                $("#new_quest_form_picture label.selected").children().removeClass("border border-primary");
+                $("#new_quest_form_picture label.selected").removeClass("selected");
+                $(this).addClass("selected");
+                console.log($(this).children());
+                $(this).children().addClass("border border-primary");
+            });
+        });
+    </script>
 {% endblock %}

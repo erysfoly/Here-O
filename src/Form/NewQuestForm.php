@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Quest;
+use DateTime;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
@@ -11,80 +12,44 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class NewQuestForm extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        $today = (new DateTime())->setTime(0,0);
         $builder
             ->add('title', TextType::class, [
-                'label' => 'Titre',
-                'label_attr' => [
-                    'class' => 'px-3 w-25',
-                ],
-                'attr' => [
-                    'placeholder' => 'Donne un titre à ta quête.',
-                    'class' => 'w-75 d-inline',
-                ],
-                'row_attr' => [
-                    'class' => 'py-1',
+                'constraints' => [
+                    new NotBlank(),
+                    new Length(null, 5),
                 ],
             ])
             ->add('description', TextareaType::class, [
-                'label_attr' => [
-                    'class' => 'px-3 w-25',
-                ],
-                'attr' => [
-                    'placeholder' => 'Dis-nous en plus sur ta quête ! Quel est son but, où a-t-elle lieu, pendant combien de temps, quelles sont les missions à accomplir ? etc.',
-                    'class' => 'w-75 d-inline',
-                    'rows' => '5',
-                ],
-                'row_attr' => [
-                    'class' => 'py-1',
+                'constraints' => [
+                    new NotBlank(),
+                    new Length(null, 140),
                 ],
             ])
             ->add('date', DateTimeType::class, [
-                'label_attr' => [
-                    'class' => 'px-3 w-25',
-                ],
-                'attr' => [
-                    'class' => 'w-75 d-flex',
-                ],
-                'row_attr' => [
-                    'class' => 'd-flex py-1',
-                ],
+                'data' => $today,
                 'date_widget' => 'single_text',
-                'time_widget' => 'single_text',
+                'time_widget' => 'choice',
+                'constraints' => [
+                    new GreaterThanOrEqual($today),
+                    new NotBlank(),
+                ],
             ])
             ->add('place', TextType::class, [
-                'label' => 'Lieu',
-                'label_attr' => [
-                    'class' => 'px-3 w-25',
-                ],
-                'attr' => [
-                    'placeholder' => 'Indique ici le lieu de ta quête.',
-                    'class' => 'w-75 d-inline',
-                ],
-                'row_attr' => [
-                    'class' => 'py-1',
+                'constraints' => [
+                    new NotBlank(),
+                    new Length(null, 2),
                 ],
             ])
             ->add('picture', ChoiceType::class, [
-                'label' => 'Image',
-                'label_attr' => [
-                    'class' => 'px-3 w-25',
-                ],
-                'attr' => [
-                    'class' => 'w-75 d-flex flex-wrap',
-                ],
-                'row_attr' => [
-                    'class' => 'd-flex py-1',
-                ],
-                'choice_attr' => function () {
-                    return [
-                        'class' => 'mx-1',
-                    ];
-                },
                 'expanded' => true,
                 'multiple' => false,
                 'label_html' => true,
@@ -95,18 +60,13 @@ class NewQuestForm extends AbstractType
                     'Animaux' => '/images/dog-2606759_960_720.webp',
                 ],
                 'choice_label' => function ($choice, $key, $value) {
-                    return '<img src="' . $value . '" alt="' . $key . '" class="w-100" />';
+                    return '<img src="' . $value . '" alt="' . $key . '" class="w-100 rounded" />';
                 },
-            ])
-            ->add('save', SubmitType::class, [
-                'label' => 'Crée ta quête maintenant',
-                'attr' => [
-                    'class' => 'btn btn-primary align-text-top',
-                ],
-                'row_attr' => [
-                    'class' => 'text-center pt-3',
+                'constraints' => [
+                    new NotBlank(),
                 ],
             ])
+            ->add('save', SubmitType::class)
         ;
     }
 
