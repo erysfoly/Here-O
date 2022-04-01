@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20220207203121 extends AbstractMigration
+final class Version20220227151935 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -20,22 +20,17 @@ final class Version20220207203121 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql(
-        'CREATE TABLE quest (
-                id SERIAL PRIMARY KEY, 
-                title VARCHAR(100) NOT NULL, 
-                author VARCHAR(50) NOT NULL, 
-                description VARCHAR(1000) NOT NULL, 
-                date TIMESTAMP NOT NULL, 
-                place VARCHAR(255) NOT NULL, 
-                people_number INT NOT NULL
-            )'
-        );
+        $this->addSql('ALTER TABLE "user" DROP password');
+        $this->addSql('ALTER TABLE "user" DROP is_verified');
+        $this->addSql('ALTER TABLE "user" ALTER email TYPE VARCHAR(255)');
     }
 
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->addSql('DROP TABLE quest');
+        $this->addSql('CREATE SCHEMA public');
+        $this->addSql('ALTER TABLE "user" ADD password VARCHAR(255) NOT NULL');
+        $this->addSql('ALTER TABLE "user" ADD is_verified BOOLEAN NOT NULL');
+        $this->addSql('ALTER TABLE "user" ALTER email TYPE VARCHAR(180)');
     }
 }

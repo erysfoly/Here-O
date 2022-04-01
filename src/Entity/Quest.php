@@ -1,11 +1,13 @@
 <?php
 
 namespace App\Entity;
+
+use App\Repository\QuestRepository;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass=QuestRepository::class)
  * @ORM\Table(name="quest")
  */
 class Quest {
@@ -23,9 +25,10 @@ class Quest {
     private string $title;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="quest")
+     * @ORM\JoinColumn(nullable=false)
      */
-    private string $author;
+    private User $author;
 
     /**
      * @ORM\Column(type="string", length=1000)
@@ -46,6 +49,11 @@ class Quest {
      * @ORM\Column(type="integer")
      */
     private int $peopleNumber;
+
+    /**
+     * @ORM\Column(type="string", length=255, options={"default" : "/images/volunteers-3874924_960_720.png"})
+     */
+    private string $picture;
 
     /**
      * @return int
@@ -71,20 +79,16 @@ class Quest {
         $this->title = $title;
     }
 
-    /**
-     * @return string
-     */
-    public function getAuthor(): string
+    public function getAuthor(): User
     {
         return $this->author;
     }
 
-    /**
-     * @param string $author
-     */
-    public function setAuthor(string $author): void
+    public function setAuthor(User $author): self
     {
         $this->author = $author;
+
+        return $this;
     }
 
     /**
@@ -149,5 +153,17 @@ class Quest {
     public function setPeopleNumber(int $peopleNumber): void
     {
         $this->peopleNumber = $peopleNumber;
+    }
+
+    public function getPicture(): string
+    {
+        return $this->picture;
+    }
+
+    public function setPicture(string $picture): self
+    {
+        $this->picture = $picture;
+
+        return $this;
     }
 }

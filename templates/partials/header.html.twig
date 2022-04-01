@@ -23,23 +23,32 @@
         </div>
         <nav class="navbar navbar-dark bg-dark shadow-sm">
             <div class="container">
-                <a href="{{ path("quest_all") }}" class="navbar-brand d-flex align-items-center">
+                <a href="{{ path("index") }}" class="navbar-brand d-flex align-items-center">
                     <!--<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" aria-hidden="true" class="me-2" viewBox="0 0 24 24">
                         <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
                         <circle cx="12" cy="13" r="4"/>
                     </svg>-->
 
                     <!--<h1><i class="fas fa-hand-holding-heart"></i> Her#O</h1>-->
-                    <h1><i class="fas fa-hands-helping"></i> Her#O</h1>
+                    <h1><i class="fas fa-hands-helping"></i> Here#O</h1>
                 </a>
-{#                <ul class="navbar-nav ms-auto px-4 flex-row">
-                    <li class="nav-item px-2">
-                        <a href="{{ path("login") }}" title="Se connecter"><i class="fas fa-user"></i></a>
-                    </li>
-                    <li class="nav-item px-2">
-                        <a href="{{ path("app_register") }}" title="Créer un compte"><i class="fas fa-user-plus"></i></a>
-                    </li>
-                </ul>#}
+                <ul class="navbar-nav ms-auto px-4 flex-row">
+                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                        <li class="nav-item px-2">
+                            <a href="{{ path("user_profile") }}" title="Accéder à mon compte"><i class="fas fa-user"></i></a>
+                        </li>
+                        <li class="nav-item px-2">
+                            <a href="{{ path("app_logout") }}" title="Me déconnecter"><i class="fas fa-sign-out-alt"></i></a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item px-2">
+                            <a href="{{ path("app_login") }}" title="Se connecter"><i class="fas fa-user"></i></a>
+                        </li>
+                        <li class="nav-item px-2">
+                            <a href="{{ path("app_register") }}" title="Créer un compte"><i class="fas fa-user-plus"></i></a>
+                        </li>
+                    {% endif %}
+                </ul>
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>

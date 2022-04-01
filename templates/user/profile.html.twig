@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{%  block title %}{{ parent() }} | Mon compte{% endblock %}
+
+{%  block body %}
+    {{ parent() }}
+
+    <div class="container">
+        <h2>Bienvenue {{ user.username }} !</h2>
+
+        {% include "quest/list.html.twig" %}
+    </div>
+
+{% endblock %}

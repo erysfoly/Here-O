@@ -1,0 +1,16 @@
+#new_quest_form_picture .form-check {
+    padding: 0.2em;
+}
+
+#new_quest_form_picture input {
+    display: none;
+}
+
+#new_quest_form_picture label {
+    cursor: pointer;
+    border-radius: 5%;
+}
+
+#new_quest_form_picture label.selected img.border {
+    border-width: 0.2rem !important;
+}

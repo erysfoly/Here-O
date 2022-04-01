@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} | Connexion{% endblock %}
+
+{% block body %}
+    {{ parent() }}
+
+    <div class="container">
+        <div class="row">
+            <div class="login-form bg-light mt-4 p-4">
+                <form method="post" class="row g-3">
+                    <h1 class="h3 mb-3 font-weight-normal">Je me connecte !</h1>
+                    {% if error %}
+                        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                    {% endif %}
+                    <div class="col-12">
+                        <label for="inputUsername">Nom d'utilisateur</label>
+                        <input type="text" name="_username" id="inputUsername" class="form-control" value="{{ last_username }}" required autofocus>
+                    </div>
+                    <div class="col-12">
+                        <label for="inputPassword">Mot de passe</label>
+                        <input type="password" name="_password" id="inputPassword" class="form-control" required>
+                    </div>
+                    <input type="hidden" name="_csrf_token"
+                           value="{{ csrf_token('authenticate') }}"
+                    >
+                    <input type="hidden" name="_target_path"
+                           value="{{ app.request.headers.get('referer') }}"
+                    >
+                    <div class="form-check mb-3">
+                        <label>
+                            <input type="checkbox" name="_remember_me" class="form-check-input"> Se souvenir de moi ?
+                        </label>
+                    </div>
+                    <div class="col-12">
+                        <button class="btn btn-lg btn-primary float-end" type="submit">
+                            Me connecter
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

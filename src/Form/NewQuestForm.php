@@ -3,87 +3,70 @@
 namespace App\Form;
 
 use App\Entity\Quest;
+use DateTime;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class NewQuestForm extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        $today = (new DateTime())->setTime(0,0);
         $builder
             ->add('title', TextType::class, [
-                'label_attr' => [
-                    'class' => 'px-3 w-25',
-                ],
-                'attr' => [
-                    'placeholder' => 'Title',
-                    'class' => 'w-75',
-                ],
-                'row_attr' => [
-                    'class' => 'py-1',
-                ],
-            ])
-            ->add('author', TextType::class, [
-                'label_attr' => [
-                    'class' => 'px-3 w-25',
-                ],
-                'attr' => [
-                    'placeholder' => 'Author',
-                    'class' => 'w-75',
-                ],
-                'row_attr' => [
-                    'class' => 'py-1',
+                'constraints' => [
+                    new NotBlank(),
+                    new Length(null, 5),
                 ],
             ])
             ->add('description', TextareaType::class, [
-                'label_attr' => [
-                    'class' => 'px-3 w-25',
-                ],
-                'attr' => [
-                    'placeholder' => 'Tell us about you quest ! What\'s its goal, where is it, how long time? etc.',
-                    'class' => 'w-75',
-                ],
-                'row_attr' => [
-                    'class' => 'py-1',
+                'constraints' => [
+                    new NotBlank(),
+                    new Length(null, 140),
                 ],
             ])
             ->add('date', DateTimeType::class, [
-                'label_attr' => [
-                    'class' => 'px-3 w-25',
-                ],
-                'attr' => [
-                    'class' => 'w-75 d-flex',
-                ],
-                'row_attr' => [
-                    'class' => 'd-flex py-1',
+                'data' => $today,
+                'date_widget' => 'single_text',
+                'time_widget' => 'choice',
+                'constraints' => [
+                    new GreaterThanOrEqual($today),
+                    new NotBlank(),
                 ],
             ])
             ->add('place', TextType::class, [
-                'label_attr' => [
-                    'class' => 'px-3 w-25',
-                ],
-                'attr' => [
-                    'placeholder' => 'Place',
-                    'class' => 'w-75',
-                ],
-                'row_attr' => [
-                    'class' => 'py-1',
+                'constraints' => [
+                    new NotBlank(),
+                    new Length(null, 2),
                 ],
             ])
-            ->add('save', SubmitType::class, [
-                'label' => 'Create new quest',
-                'attr' => [
-                    'class' => 'btn btn-primary align-text-top',
+            ->add('picture', ChoiceType::class, [
+                'expanded' => true,
+                'multiple' => false,
+                'label_html' => true,
+                'choices' => [
+                    'Planète Terre' => '/images/globe-3984876_960_720.webp',
+                    'Bricolage' => '/images/tools-864983_960_720.webp',
+                    'Technologie' => '/images/pen-4337524_960_720.webp',
+                    'Animaux' => '/images/dog-2606759_960_720.webp',
                 ],
-                'row_attr' => [
-                    'class' => 'text-center pt-3',
+                'choice_label' => function ($choice, $key, $value) {
+                    return '<img src="' . $value . '" alt="' . $key . '" class="w-100 rounded" />';
+                },
+                'constraints' => [
+                    new NotBlank(),
                 ],
             ])
+            ->add('save', SubmitType::class)
         ;
     }
 
