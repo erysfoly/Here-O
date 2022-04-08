@@ -1,3 +1,10 @@
+/** Global CSS **/
+h2,h3 {
+    text-align: center;
+}
+
+/** New quest form **/
+
 #new_quest_form_picture .form-check {
     padding: 0.2em;
 }
