@@ -11,6 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -27,9 +28,13 @@ class ResetPasswordController extends AbstractController
 {
     use ResetPasswordControllerTrait;
 
-    private $resetPasswordHelper;
-    private $entityManager;
+    private ResetPasswordHelperInterface $resetPasswordHelper;
+    private EntityManagerInterface $entityManager;
 
+    /**
+     * @param ResetPasswordHelperInterface $resetPasswordHelper
+     * @param EntityManagerInterface $entityManager
+     */
     public function __construct(ResetPasswordHelperInterface $resetPasswordHelper, EntityManagerInterface $entityManager)
     {
         $this->resetPasswordHelper = $resetPasswordHelper;
@@ -40,6 +45,11 @@ class ResetPasswordController extends AbstractController
      * Display & process form to request a password reset.
      *
      * @Route("", name="app_forgot_password_request")
+     * @param Request $request
+     * @param MailerInterface $mailer
+     * @param TranslatorInterface $translator
+     * @return Response
+     * @throws TransportExceptionInterface
      */
     public function request(Request $request, MailerInterface $mailer, TranslatorInterface $translator): Response
     {
@@ -63,6 +73,7 @@ class ResetPasswordController extends AbstractController
      * Confirmation page after a user has requested a password reset.
      *
      * @Route("/check-email", name="app_check_email")
+     * @return Response
      */
     public function checkEmail(): Response
     {
@@ -81,6 +92,11 @@ class ResetPasswordController extends AbstractController
      * Validates and process the reset URL that the user clicked in their email.
      *
      * @Route("/reset/{token}", name="app_reset_password")
+     * @param Request $request
+     * @param UserPasswordHasherInterface $userPasswordHasher
+     * @param TranslatorInterface $translator
+     * @param string|null $token
+     * @return Response
      */
     public function reset(Request $request, UserPasswordHasherInterface $userPasswordHasher, TranslatorInterface $translator, string $token = null): Response
     {
@@ -129,6 +145,11 @@ class ResetPasswordController extends AbstractController
             // The session is cleaned up after the password has been changed.
             $this->cleanSessionAfterReset();
 
+            $this->addFlash(
+                "success",
+                'Ton mot de passe a bien été changé, bon retour parmi nous !'
+            );
+
             return $this->redirectToRoute('index');
         }
 
@@ -137,6 +158,13 @@ class ResetPasswordController extends AbstractController
         ]);
     }
 
+    /**
+     * @param string $emailFormData
+     * @param MailerInterface $mailer
+     * @param TranslatorInterface $translator
+     * @return RedirectResponse
+     * @throws TransportExceptionInterface
+     */
     private function processSendingPasswordResetEmail(string $emailFormData, MailerInterface $mailer, TranslatorInterface $translator): RedirectResponse
     {
         $user = $this->entityManager->getRepository(User::class)->findOneBy([
@@ -167,10 +195,11 @@ class ResetPasswordController extends AbstractController
         $email = (new TemplatedEmail())
             ->from(new Address('hereo.team@gmail.com', 'Here#O Team'))
             ->to($user->getEmail())
-            ->subject('Your password reset request')
+            ->subject('Réinitialisation de ton mot de passe')
             ->htmlTemplate('reset_password/email.html.twig')
             ->context([
                 'resetToken' => $resetToken,
+                'username'   => $user->getUserIdentifier(),
             ])
         ;
 
