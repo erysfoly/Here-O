@@ -38,18 +38,27 @@
         <h2>Je crée mon compte !</h2>
         <div class="w-50 mx-auto pt-4">
             {{ form_start(registrationForm) }}
-                {{ form_row(registrationForm.username, {
-                    label:"Nom d'utilisateur"
-                }) }}
-                {{ form_row(registrationForm.email, {
-                    label:"Email"
-                }) }}
-                {{ form_row(registrationForm.plainPassword, {
-                    label: 'Mot de passe'
-                }) }}
-                {{ form_row(registrationForm.agreeTerms, {
-                    label: "J'accepte les conditions d'utilisation du site"
-                }) }}
+
+            {{ form_row(registrationForm.username, {
+                label:"Nom d'utilisateur"
+            }) }}
+
+            {{ form_row(registrationForm.email, {
+                label:"Email"
+            }) }}
+
+            {{ form_row(registrationForm.plainPassword.first, {
+                label: 'Mot de passe'
+            }) }}
+
+            {{ form_row(registrationForm.plainPassword.second, {
+                label: 'Confirmation du mot de passe'
+            }) }}
+
+            {{ form_row(registrationForm.agreeTerms, {
+                label: "J'accepte les conditions d'utilisation du site"
+            }) }}
+
             <input type="hidden" name="_target_path"
                    value="{{ app.request.headers.get('referer') }}"
             >
@@ -57,6 +66,7 @@
             <div class="text-center pt-3">
                 <button type="submit" class="btn btn-lg btn-primary">Créer mon compte</button>
             </div>
+
             {{ form_end(registrationForm) }}
         </div>
     </div>
