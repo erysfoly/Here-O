@@ -13,11 +13,11 @@
                     <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
                 {% endif %}
                 <div class="py-1">
-                    <label for="inputUsername">Nom d'utilisateur</label>
+                    <label for="inputUsername" class="form-label">Nom d'utilisateur</label>
                     <input type="text" name="_username" id="inputUsername" class="form-control" value="{{ last_username }}" required autofocus>
                 </div>
                 <div class="py-1">
-                    <label for="inputPassword">Mot de passe</label>
+                    <label for="inputPassword" class="form-label">Mot de passe</label>
                     <input type="password" name="_password" id="inputPassword" class="form-control" required>
                 </div>
                 <input type="hidden" name="_csrf_token"
@@ -27,9 +27,11 @@
                        value="{{ app.request.headers.get('referer') }}"
                 >
                 <div class="py-1">
-                    <label>
-                        <input type="checkbox" name="_remember_me" class="form-check-input"> Se souvenir de moi ?
-                    </label>
+                    <div class="form-check">
+                        <label class="form-check-label">
+                            <input type="checkbox" name="_remember_me" class="form-check-input">Se souvenir de moi ?
+                        </label>
+                    </div>
                 </div>
                 <div class="small text-muted py-1">
                     Tu as oublié ton mot de passe ? Clique sur le lien suivant pour demander à le changer : <a
