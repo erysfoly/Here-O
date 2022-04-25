@@ -59,6 +59,14 @@
                 label: "J'accepte les conditions d'utilisation du site"
             }) }}
 
+            <div class="py-1">
+                {{ form_label(registrationForm.captcha) }}
+                <div>
+                    {{ form_widget(registrationForm.captcha) }}
+                    {{ form_errors(registrationForm.captcha) }}
+                </div>
+            </div>
+
             <input type="hidden" name="_target_path"
                    value="{{ app.request.headers.get('referer') }}"
             >

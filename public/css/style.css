@@ -3,6 +3,10 @@ h2,h3 {
     text-align: center;
 }
 
+.captcha_image {
+    margin-bottom: 0.5rem;
+}
+
 /** New quest form **/
 
 #new_quest_form_picture .form-check {
