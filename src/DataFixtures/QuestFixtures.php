@@ -22,7 +22,7 @@ class QuestFixtures extends Fixture
 
 
             $quest->setPlace("Lieu $i");
-            $quest->setPeopleNumber($i * $i);
+            $quest->setMaxPeopleNumber($i * $i);
 
             $manager->persist($quest);
         }

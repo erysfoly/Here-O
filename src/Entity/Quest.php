@@ -4,11 +4,21 @@ namespace App\Entity;
 
 use App\Repository\QuestRepository;
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=QuestRepository::class)
  * @ORM\Table(name="quest")
+ * @ApiResource(
+ *     collectionOperations={"get", "post"},
+ *     itemOperations={"get", "put", "delete"},
+ *     normalizationContext={"groups"={"quests:read"}, "swagger_definition_name"="Read"},
+ *     denormalizationContext={"groups"={"quests:write"}, "swagger_definition_name"="Read"}
+ * )
  */
 class Quest {
 
@@ -21,39 +31,55 @@ class Quest {
 
     /**
      * @ORM\Column(type="string", length=100)
+     * @Groups({"quests:read", "quests:write"})
      */
     private string $title;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="quest")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"quests:read", "quests:write"})
      */
     private User $author;
 
     /**
      * @ORM\Column(type="string", length=1000)
+     * @Groups({"quests:read", "quests:write"})
      */
     private string $description;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups({"quests:read", "quests:write"})
      */
     private DateTime $date;
 
     /**
      * @ORM\Column(type="string")
+     * @Groups({"quests:read", "quests:write"})
      */
     private string $place;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"quests:read", "quests:write"})
      */
-    private int $peopleNumber;
+    private int $maxPeopleNumber;
 
     /**
      * @ORM\Column(type="string", length=255, options={"default" : "/images/volunteers-3874924_960_720.png"})
      */
     private string $picture;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=User::class, mappedBy="participatingQuests")
+     */
+    private $participants;
+
+    public function __construct()
+    {
+        $this->participants = new ArrayCollection();
+    }
 
     /**
      * @return int
@@ -79,11 +105,18 @@ class Quest {
         $this->title = $title;
     }
 
+    /**
+     * @return User
+     */
     public function getAuthor(): User
     {
         return $this->author;
     }
 
+    /**
+     * @param User $author
+     * @return $this
+     */
     public function setAuthor(User $author): self
     {
         $this->author = $author;
@@ -142,27 +175,69 @@ class Quest {
     /**
      * @return int
      */
-    public function getPeopleNumber(): int
+    public function getMaxPeopleNumber(): int
     {
-        return $this->peopleNumber;
+        return $this->maxPeopleNumber;
     }
 
     /**
-     * @param int $peopleNumber
+     * @param int $maxPeopleNumber
      */
-    public function setPeopleNumber(int $peopleNumber): void
+    public function setMaxPeopleNumber(int $maxPeopleNumber): void
     {
-        $this->peopleNumber = $peopleNumber;
+        $this->maxPeopleNumber = $maxPeopleNumber;
     }
 
+    /**
+     * @return string
+     */
     public function getPicture(): string
     {
         return $this->picture;
     }
 
+    /**
+     * @param string $picture
+     * @return $this
+     */
     public function setPicture(string $picture): self
     {
         $this->picture = $picture;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getParticipants(): Collection
+    {
+        return $this->participants;
+    }
+
+    /**
+     * @param User $participant
+     * @return $this
+     */
+    public function addParticipant(User $participant): self
+    {
+        if (!$this->participants->contains($participant)) {
+            $this->participants[] = $participant;
+            $participant->addParticipatingQuest($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param User $participant
+     * @return $this
+     */
+    public function removeParticipant(User $participant): self
+    {
+        if ($this->participants->removeElement($participant)) {
+            $participant->removeParticipatingQuest($this);
+        }
 
         return $this;
     }

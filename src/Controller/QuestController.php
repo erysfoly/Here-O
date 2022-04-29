@@ -31,7 +31,7 @@ class QuestController extends AbstractController
             /** @var Quest $quest */
             $quest = $form->getData();
             $quest->setAuthor($this->getUser());
-            $quest->setPeopleNumber(0);
+            $quest->setMaxPeopleNumber(0);
 
             $entityManager = $doctrine->getManager();
             $entityManager->persist($quest);
@@ -83,9 +83,11 @@ class QuestController extends AbstractController
     public function addPeopleToQuest(ManagerRegistry $doctrine, int $id): Response
     {
         $entityManager = $doctrine->getManager();
+        /** @var Quest $quest */
         $quest = $doctrine->getRepository(Quest::class)->find($id);
 
-        $quest->setPeopleNumber($quest->getPeopleNumber()+1);
+        $quest->addParticipant($this->getUser());
+        //$quest->setPeopleNumber($quest->getPeopleNumber()+1);
 
         $entityManager->flush();
         $this->addFlash(
