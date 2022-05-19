@@ -57,7 +57,7 @@
                     </div>
 
                     <div class="py-1 d-flex">
-                        {{ form_label(form.date, null, {
+                        {{ form_label(form.date, 'Date et heure', {
                             'label_attr': {
                                 'class': 'w-25 py-0'
                             }
@@ -94,6 +94,22 @@
                     </div>
 
                     <div class="py-1 d-flex">
+                        {{ form_label(form.maxPeopleNumber, 'Nombre max de participants', {
+                            'label_attr': {
+                                'class': 'w-25'
+                            },
+                        }) }}
+                        <div class="w-75">
+                            {{ form_widget(form.maxPeopleNumber, {
+                                'attr': {
+                                    'min': 1
+                                }
+                            }) }}
+                            {{ form_errors(form.maxPeopleNumber) }}
+                        </div>
+                    </div>
+
+                    <div class="py-1 d-flex">
                         {{ form_label(form.picture, 'Image', {
                             'label_attr': {
                                 'class': 'w-25 py-0'
@@ -122,10 +138,10 @@
 
                 {{ form_end(form) }}
             {% else %}
-                <p>
+                <p class="text-center">
                     Tu dois être connecté.e pour créer une nouvelle quête.
                 </p>
-                <p>
+                <p class="text-center">
                     <a class="btn btn-primary" href="{{ path("app_login") }}" title="Se connecter">Je me connecte !</a>
                     <a class="btn btn-primary" href="{{ path("app_register") }}" title="Créer un compte">Je n'ai pas de compte, j'en crée un !</a>
                 </p>

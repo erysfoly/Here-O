@@ -7,6 +7,7 @@ use DateTime;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -48,6 +49,13 @@ class NewQuestForm extends AbstractType
                     new NotBlank(),
                     new Length(null, 2),
                 ],
+            ])
+            ->add('maxPeopleNumber', IntegerType::class, [
+                'data' => 1,
+                'constraints' => [
+                    new NotBlank(),
+                    new GreaterThanOrEqual(1)
+                ]
             ])
             ->add('picture', ChoiceType::class, [
                 'expanded' => true,

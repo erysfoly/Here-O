@@ -1,4 +1,5 @@
 {% if quests is not empty %}
+    {{ dump(quests) }}
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
         {% for quest in quests %}
             <div class="col">
@@ -9,7 +10,7 @@
                         <h3>{{ quest.title }}</h3>
                         <p class="card-text">
                             {% if quest.description|length > 20 %}
-                                {{ quest.description | slice(0, 50) }}...
+                                {{ quest.description|slice(0, 50) }}...
                             {% else %}
                                 {{ quest.description }}
                             {% endif %}
@@ -19,7 +20,7 @@
                                 <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#detailModal{{ quest.id }}">See details</button>
 {#                                <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>#}
                             </div>
-                            <small class="text-muted">{{ quest.peopleNumber }} participant{{ quest.peopleNumber == 1 ? '.e' : 's' }}</small>
+                            <small class="text-muted">{{ quest.participants.count }} / {{ quest.maxPeopleNumber }} participant{{ quest.participants.count == 1 ? '.e' : '.e.s' }}</small>
                         </div>
                     </div>
                 </div>
@@ -51,15 +52,15 @@
                                 {{ quest.place }}
                             </p>
                             <p>
-                                <strong>Nombre de participants :</strong>
-                                {{ quest.peopleNumber }}
+                                <strong>Nombre de participant.e.s :</strong>
+                                {{ quest.participants.count }} / {{ quest.maxPeopleNumber }}
                                 {% if app.user == quest.author %}
-                                    <br><small class="text-muted">N.B. : en tant qu'en organisateur.rice, tu n'es pas inclus.e dans les participants</small>
+                                    <br><small class="text-muted">N.B. : en tant qu'en organisateur.rice, tu n'es pas inclus.e dans les participant.e.s</small>
                                 {% endif %}
                             </p>
                             <p>
                                 <strong>Description :</strong><br/>
-                                {{ quest.description }}
+                                {{ quest.description|nl2br }}
                             </p>
                         </div>
 
@@ -67,7 +68,13 @@
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
 
                             {% if app.user != quest.author %}
-                                <a class="btn btn-primary" href="{{ path("quest_participate", {id: quest.id}) }}">Participer</a>
+                                <a class="btn btn-primary" href="{{ path("quest_participate", {id: quest.id}) }}">
+                                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                                        Participer
+                                    {% else %}
+                                        Connecte-toi pour participer
+                                    {% endif %}
+                                </a>
                             {% endif %}
                         </div>
 

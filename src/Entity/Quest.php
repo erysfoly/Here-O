@@ -36,7 +36,7 @@ class Quest {
     private string $title;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="quest")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="createdQuests")
      * @ORM\JoinColumn(nullable=false)
      * @Groups({"quests:read", "quests:write"})
      */
@@ -68,13 +68,14 @@ class Quest {
 
     /**
      * @ORM\Column(type="string", length=255, options={"default" : "/images/volunteers-3874924_960_720.png"})
+     * @Groups({"quests:read"})
      */
     private string $picture;
 
     /**
      * @ORM\ManyToMany(targetEntity=User::class, mappedBy="participatingQuests")
      */
-    private $participants;
+    private Collection $participants;
 
     public function __construct()
     {
