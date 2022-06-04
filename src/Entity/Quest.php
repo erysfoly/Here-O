@@ -16,8 +16,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
  * @ApiResource(
  *     collectionOperations={"get", "post"},
  *     itemOperations={"get", "put", "delete"},
- *     normalizationContext={"groups"={"quests:read"}, "swagger_definition_name"="Read"},
- *     denormalizationContext={"groups"={"quests:write"}, "swagger_definition_name"="Read"}
+ *     normalizationContext={"groups"={"quests:read"}},
+ *     denormalizationContext={"groups"={"quests:write"}}
  * )
  */
 class Quest {
@@ -67,10 +67,10 @@ class Quest {
     private int $maxPeopleNumber;
 
     /**
-     * @ORM\Column(type="string", length=255, options={"default" : "/images/volunteers-3874924_960_720.png"})
+     * @ORM\Column(type="string", length=255, options={"default" : "/images/volunteers-3874924_960_720.webp"})
      * @Groups({"quests:read"})
      */
-    private string $picture;
+    private string $picture = "/images/volunteers-3874924_960_720.webp";
 
     /**
      * @ORM\ManyToMany(targetEntity=User::class, mappedBy="participatingQuests")
