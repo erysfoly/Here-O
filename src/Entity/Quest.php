@@ -14,10 +14,35 @@ use Symfony\Component\Serializer\Annotation\Groups;
  * @ORM\Entity(repositoryClass=QuestRepository::class)
  * @ORM\Table(name="quest")
  * @ApiResource(
- *     collectionOperations={"get", "post"},
- *     itemOperations={"get", "put", "delete"},
- *     normalizationContext={"groups"={"quests:read"}},
- *     denormalizationContext={"groups"={"quests:write"}}
+ *     collectionOperations={
+ *          "get",
+ *          "post" = {
+ *              "security" = "is_granted('ROLE_USER')",
+ *              "security_message" = "Sorry, but you are not connected.",
+ *              "openapi_context" = {
+ *                  "security" = {{"bearerAuth" = {}}}
+ *              }
+ *          }
+ *     },
+ *     itemOperations={
+ *          "get",
+ *          "put" = {
+ *              "security_post_denormalize" = "is_granted('ROLE_USER') and (object.author == user and previous_object.author == user)",
+ *              "security_post_denormalize_message" = "Sorry, but you are not the quest author.",
+ *              "openapi_context" = {
+ *                  "security" = {{"bearerAuth" = {}}}
+ *              }
+ *          },
+ *          "delete" = {
+ *              "security" = "is_granted('ROLE_USER') and object.author == user",
+ *              "security_message" = "Sorry, but you are not the quest author.",
+ *              "openapi_context" = {
+ *                  "security" = {{"bearerAuth" = {}}}
+ *              }
+ *          }
+ *     },
+ *     normalizationContext={"groups" = {"quests:read"}},
+ *     denormalizationContext={"groups" = {"quests:write"}}
  * )
  */
 class Quest {
@@ -40,7 +65,7 @@ class Quest {
      * @ORM\JoinColumn(nullable=false)
      * @Groups({"quests:read", "quests:write"})
      */
-    private User $author;
+    public User $author;
 
     /**
      * @ORM\Column(type="string", length=1000)
