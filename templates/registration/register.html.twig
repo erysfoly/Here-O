@@ -67,9 +67,14 @@
                 </div>
             </div>
 
-            <input type="hidden" name="_target_path"
-                   value="{{ app.request.headers.get('referer') }}"
-            >
+            {% set targetPath %}
+                {% if "login" in app.request.headers.get('referer') or "register" in app.request.headers.get('referer') %}
+                    {{ app.request.headers.get('referer')|replace({'login': '', 'register': ''}) }}
+                {% else %}
+                    {{ app.request.headers.get('referer') }}
+                {% endif %}
+            {% endset %}
+            <input type="hidden" name="_target_path" value="{{ targetPath|spaceless }}">
 
             <div class="text-center pt-3">
                 <button type="submit" class="btn btn-lg btn-primary">Créer mon compte</button>

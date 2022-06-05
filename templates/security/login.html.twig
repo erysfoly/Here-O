@@ -20,12 +20,17 @@
                     <label for="inputPassword" class="form-label">Mot de passe</label>
                     <input type="password" name="_password" id="inputPassword" class="form-control" required>
                 </div>
-                <input type="hidden" name="_csrf_token"
-                       value="{{ csrf_token('authenticate') }}"
-                >
-                <input type="hidden" name="_target_path"
-                       value="{{ app.request.headers.get('referer') }}"
-                >
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+                {% set targetPath %}
+                    {% if "login" in app.request.headers.get('referer') or "register" in app.request.headers.get('referer') %}
+                        {{ app.request.headers.get('referer')|replace({'login': '', 'register': ''}) }}
+                    {% else %}
+                        {{ app.request.headers.get('referer') }}
+                    {% endif %}
+                {% endset %}
+                <input type="hidden" name="_target_path" value="{{ targetPath|spaceless }}">
+
                 <div class="py-1">
                     <div class="form-check">
                         <label class="form-check-label">
