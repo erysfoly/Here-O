@@ -73,7 +73,7 @@ class QuestController extends AbstractController
     }
 
     /**
-     * @Route("/edit/{id}", name="edit")
+     * @Route("/{id}/edit", name="edit")
      */
     public function updateAction(Request $request, ManagerRegistry $doctrine, $id) {
 
