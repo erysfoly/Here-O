@@ -72,6 +72,35 @@ class QuestController extends AbstractController
     }
 
     /**
+     * @Route("/{id}/delete", name="delete")
+     *
+     * @param ManagerRegistry $doctrine
+     * @param int $id
+     * @return Response
+     */
+    public function deleteAction(ManagerRegistry $doctrine, int $id): Response
+    {
+        $entityManager = $doctrine->getManager();
+        $quest = $doctrine->getRepository(Quest::class)->find($id);
+
+        if (!$quest) {
+            throw $this->createNotFoundException(
+                'Aucune quête ne correspond à l\'id ' . $id . '.'
+            );
+        }
+
+        $entityManager->remove($quest);
+        $entityManager->flush();
+
+        $this->addFlash(
+            "success",
+            'La quête "' . $quest->getTitle() . '" a bien été supprimée.'
+        );
+
+        return $this->redirect($this->generateUrl('index'));
+    }
+
+    /**
      * @Route("/{id}/participate", name="participate")
      *
      * @param ManagerRegistry $doctrine

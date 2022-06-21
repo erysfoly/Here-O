@@ -64,6 +64,9 @@
                         </div>
 
                         <div class="modal-footer">
+                            {% if app.user == quest.author %}
+                                <a class="btn btn-outline-primary" href="{{ path("quest_delete", {id: quest.id}) }}">Supprimer</a>
+                            {% endif %}
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
 
                             {% if app.user != quest.author %}
