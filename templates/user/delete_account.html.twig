@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} | Supprimer mon compte{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h2>Supprimer mon compte</h2>
+        <div class="w-50 mx-auto pt-4">
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam cum debitis doloribus ea eius eligendi id inventore ipsa, ipsam labore molestiae, mollitia, nisi obcaecati omnis pariatur qui quos sunt voluptate.
+            </p>
+            {{ form_start(deleteAccountForm) }}
+
+            {{ form_row(deleteAccountForm.validateDeletion, {
+                label: 'Recopie la phrase suivante pour garantir ta volonté de supprimer ton compte : "' ~ constant('App\\Controller\\UserController::DELETE_ACCOUNT_SENTENCE') ~ '".'
+            }) }}
+
+            {{ form_row(deleteAccountForm.confirm, {
+                label: 'Supprimer définitivement mon compte'
+            }) }}
+
+            {{ form_end(deleteAccountForm) }}
+        </div>
+    </div>
+{% endblock %}

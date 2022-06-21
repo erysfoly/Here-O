@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{%  block title %}{{ parent() }} | Mes paramètres de compte{% endblock %}
+
+{%  block body %}
+    {{ parent() }}
+
+    <div class="container">
+        <h2>Mes paramètres de compte</h2>
+
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam cum debitis doloribus ea eius eligendi id inventore ipsa, ipsam labore molestiae, mollitia, nisi obcaecati omnis pariatur qui quos sunt voluptate.
+        </p>
+
+        <p>
+            <ul class="list-unstyled">
+                <li><a href="{{ path("app_forgot_password_request") }}">Réinitialiser mon compte</a></li>
+                <li><a href="{{ path('delete_account') }}">Supprimer mon compte</a></li>
+            </ul>
+        </p>
+    </div>
+
+{% endblock %}

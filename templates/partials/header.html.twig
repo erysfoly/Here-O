@@ -34,11 +34,17 @@
                 </a>
                 <ul class="navbar-nav ms-auto px-4 flex-row">
                     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                        <li class="nav-item px-2">
-                            <a href="{{ path("user_profile") }}" title="Accéder à mon compte"><i class="fas fa-user"></i></a>
+                        <li class="nav-item dropdown px-2">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" title="Accéder à mon compte" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-user"></i>
+                            </a>
+                            <ul class="dropdown-menu position-absolute" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="{{ path("user_profile") }}">Dashboard</a></li>
+                                <li><a class="dropdown-item" href="{{ path("settings") }}">Paramètres</a></li>
+                            </ul>
                         </li>
                         <li class="nav-item px-2">
-                            <a href="{{ path("app_logout") }}" title="Me déconnecter"><i class="fas fa-sign-out-alt"></i></a>
+                            <a class="nav-link" href="{{ path("app_logout") }}" title="Me déconnecter"><i class="fas fa-sign-out-alt"></i></a>
                         </li>
                     {% else %}
                         <li class="nav-item px-2">
