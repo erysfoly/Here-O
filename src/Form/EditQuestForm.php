@@ -47,6 +47,12 @@ class EditQuestForm extends AbstractType
                     new Length(null, 2),
                 ],
             ])
+            ->add('minPeopleNumber', IntegerType::class, [
+                'constraints' => [
+                    new NotBlank(),
+                    new GreaterThanOrEqual(1)
+                ]
+            ])
             ->add('maxPeopleNumber', IntegerType::class, [
                 'constraints' => [
                     new NotBlank(),

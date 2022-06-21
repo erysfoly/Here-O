@@ -89,6 +89,12 @@ class Quest {
      * @ORM\Column(type="integer")
      * @Groups({"quests:read", "quests:write"})
      */
+    private int $minPeopleNumber;
+
+    /**
+     * @ORM\Column(type="integer")
+     * @Groups({"quests:read", "quests:write"})
+     */
     private int $maxPeopleNumber;
 
     /**
@@ -196,6 +202,22 @@ class Quest {
     public function setPlace(string $place): void
     {
         $this->place = $place;
+    }
+
+    /**
+     * @return int
+     */
+    public function getMinPeopleNumber(): int
+    {
+        return $this->minPeopleNumber;
+    }
+
+    /**
+     * @param int $minPeopleNumber
+     */
+    public function setMinPeopleNumber(int $minPeopleNumber): void
+    {
+        $this->minPeopleNumber = $minPeopleNumber;
     }
 
     /**

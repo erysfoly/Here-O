@@ -50,11 +50,18 @@ class NewQuestForm extends AbstractType
                     new Length(null, 2),
                 ],
             ])
-            ->add('maxPeopleNumber', IntegerType::class, [
-                'data' => 1,
+            ->add('minPeopleNumber', IntegerType::class, [
+                'data' => 5,
                 'constraints' => [
                     new NotBlank(),
-                    new GreaterThanOrEqual(1)
+                    new GreaterThanOrEqual(5)
+                ]
+            ])
+            ->add('maxPeopleNumber', IntegerType::class, [
+                'data' => 5,
+                'constraints' => [
+                    new NotBlank(),
+                    new GreaterThanOrEqual(5)
                 ]
             ])
             ->add('picture', ChoiceType::class, [

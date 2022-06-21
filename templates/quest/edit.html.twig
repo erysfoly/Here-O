@@ -93,7 +93,23 @@
                 </div>
 
                 <div class="py-1 d-flex">
-                    {{ form_label(form.maxPeopleNumber, 'Nombre max de participants', {
+                    {{ form_label(form.minPeopleNumber, 'Participant.e.s min', {
+                        'label_attr': {
+                            'class': 'w-25'
+                        },
+                    }) }}
+                    <div class="w-75">
+                        {{ form_widget(form.minPeopleNumber, {
+                            'attr': {
+                                'min': 5
+                            }
+                        }) }}
+                        {{ form_errors(form.minPeopleNumber) }}
+                    </div>
+                </div>
+
+                <div class="py-1 d-flex">
+                    {{ form_label(form.maxPeopleNumber, 'Participant.e.s max', {
                         'label_attr': {
                             'class': 'w-25'
                         },
