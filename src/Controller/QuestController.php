@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Quest;
 use App\Entity\User;
+use App\Form\EditQuestForm;
 use App\Form\NewQuestForm;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -67,6 +68,46 @@ class QuestController extends AbstractController
             'quest/index.html.twig',
             [
                 'quests' => $quests,
+            ]
+        );
+    }
+
+    /**
+     * @Route("/edit/{id}", name="edit")
+     */
+    public function updateAction(Request $request, ManagerRegistry $doctrine, $id) {
+
+        $quest = $doctrine->getRepository(Quest::class)->find($id);
+
+        if (!$quest) {
+            throw $this->createNotFoundException(
+                'Aucune quête ne correspond à l\'id ' . $id . '.'
+            );
+        }
+
+        $form = $this->createForm(EditQuestForm::class, $quest);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            /** @var Quest $quest */
+            $quest = $form->getData();
+
+            $entityManager = $doctrine->getManager();
+            $entityManager->persist($quest);
+            $entityManager->flush();
+
+            $this->addFlash(
+                "success",
+                'La quête "' . $quest->getTitle() . '" a bien été modifiée.'
+            );
+
+            return $this->redirectToRoute("index");
+        }
+
+        return $this->renderForm(
+            'quest/edit.html.twig',
+            [
+                'form' => $form,
             ]
         );
     }
