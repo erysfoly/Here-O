@@ -73,6 +73,31 @@ class QuestController extends AbstractController
     }
 
     /**
+     * @Route("/{id}", name="one")
+     *
+     * @param ManagerRegistry $doctrine
+     * @param int $id
+     * @return Response
+     */
+    public function viewOneAction(ManagerRegistry $doctrine, int $id): Response
+    {
+        $quest = $doctrine->getRepository(Quest::class)->findOneBy(['id' => $id]);
+
+        if (!$quest) {
+            throw $this->createNotFoundException(
+                'Aucune quête pour l\'id: ' . $id . '.'
+            );
+        }
+
+        return $this->render(
+            'quest/view.html.twig',
+            [
+                'quest' => $quest,
+            ]
+        );
+    }
+
+    /**
      * @Route("/{id}/edit", name="edit")
      */
     public function updateAction(Request $request, ManagerRegistry $doctrine, $id) {

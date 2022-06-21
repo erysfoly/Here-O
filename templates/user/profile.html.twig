@@ -8,7 +8,9 @@
     <div class="container">
         <h2>Bienvenue {{ user.username }} !</h2>
 
-        {% include "quest/list.html.twig" %}
+        <div class="pt-4">
+            {% include "quest/list.html.twig" %}
+        </div>
     </div>
 
 {% endblock %}
