@@ -60,7 +60,11 @@
             </div>
         </div>
         <div class="pt-5">
-            <a href="{{ path("index") }}"><i class="fas fa-arrow-left"></i> Retour à la liste des quêtes</a>
+            {% if "profile" in app.request.headers.get('referer') %}
+                <a href="{{ path("user_profile") }}"><i class="fas fa-arrow-left"></i> Retour à mon compte</a>
+            {% else %}
+                <a href="{{ path("index") }}"><i class="fas fa-arrow-left"></i> Retour à la liste des quêtes</a>
+            {% endif %}
         </div>
     </div>
 {% endblock %}

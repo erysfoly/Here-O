@@ -22,13 +22,13 @@ class UserController extends AbstractController
     {
         /** @var User $currentUser */
         $currentUser = $this->getUser();
-        $quests = $doctrine->getRepository(Quest::class)->findBy(["author" => $currentUser]);
 
         return $this->render(
             'user/profile.html.twig',
             [
                 'user' => $currentUser,
-                'quests' => $quests,
+                'createdQuests' => $currentUser->getCreatedQuests(),
+                'participatingQuests' => $currentUser->getParticipatingQuests(),
             ]
         );
     }
