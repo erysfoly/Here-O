@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} | Contact{% endblock %}
+
+{% block body %}
+    {{ parent() }}
+
+    <div class="container">
+        <h2>Contact</h2>
+        <div class="w-50 mx-auto pt-4">
+            {{ form_start(contactForm) }}
+
+            {{ form_row(contactForm.name, {
+                label:"Prénom - Nom"
+            }) }}
+
+            {{ form_row(contactForm.email, {
+                label:"Email"
+            }) }}
+
+            {{ form_row(contactForm.subject, {
+                label: 'Sujet du message'
+            }) }}
+
+            {{ form_row(contactForm.message, {
+                label: 'Message'
+            }) }}
+
+            <div class="py-1">
+                {{ form_label(contactForm.captcha) }}
+                <div>
+                    {{ form_widget(contactForm.captcha) }}
+                    {{ form_errors(contactForm.captcha) }}
+                </div>
+            </div>
+
+            {{ form_row(contactForm.send, {
+                label: 'Envoyer'
+            }) }}
+
+            {{ form_end(contactForm) }}
+        </div>
+    </div>
+{% endblock %}
