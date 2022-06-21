@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Quest;
 use App\Entity\User;
+use App\Form\EditQuestForm;
 use App\Form\NewQuestForm;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -31,7 +32,6 @@ class QuestController extends AbstractController
             /** @var Quest $quest */
             $quest = $form->getData();
             $quest->setAuthor($this->getUser());
-            $quest->setPeopleNumber(0);
 
             $entityManager = $doctrine->getManager();
             $entityManager->persist($quest);
@@ -42,7 +42,7 @@ class QuestController extends AbstractController
                 'La quête "' . $quest->getTitle() . '" a bien été créée.'
             );
 
-            return $this->redirectToRoute("quest_all");
+            return $this->redirectToRoute("index");
         }
 
         return $this->renderForm(
@@ -73,6 +73,100 @@ class QuestController extends AbstractController
     }
 
     /**
+     * @Route("/{id}", name="one")
+     *
+     * @param ManagerRegistry $doctrine
+     * @param int $id
+     * @return Response
+     */
+    public function viewOneAction(ManagerRegistry $doctrine, int $id): Response
+    {
+        $quest = $doctrine->getRepository(Quest::class)->findOneBy(['id' => $id]);
+
+        if (!$quest) {
+            throw $this->createNotFoundException(
+                'Aucune quête pour l\'id: ' . $id . '.'
+            );
+        }
+
+        return $this->render(
+            'quest/view.html.twig',
+            [
+                'quest' => $quest,
+            ]
+        );
+    }
+
+    /**
+     * @Route("/{id}/edit", name="edit")
+     */
+    public function updateAction(Request $request, ManagerRegistry $doctrine, $id) {
+
+        $quest = $doctrine->getRepository(Quest::class)->find($id);
+
+        if (!$quest) {
+            throw $this->createNotFoundException(
+                'Aucune quête ne correspond à l\'id ' . $id . '.'
+            );
+        }
+
+        $form = $this->createForm(EditQuestForm::class, $quest);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            /** @var Quest $quest */
+            $quest = $form->getData();
+
+            $entityManager = $doctrine->getManager();
+            $entityManager->persist($quest);
+            $entityManager->flush();
+
+            $this->addFlash(
+                "success",
+                'La quête "' . $quest->getTitle() . '" a bien été modifiée.'
+            );
+
+            return $this->redirectToRoute("index");
+        }
+
+        return $this->renderForm(
+            'quest/edit.html.twig',
+            [
+                'form' => $form,
+            ]
+        );
+    }
+
+    /**
+     * @Route("/{id}/delete", name="delete")
+     *
+     * @param ManagerRegistry $doctrine
+     * @param int $id
+     * @return Response
+     */
+    public function deleteAction(ManagerRegistry $doctrine, int $id): Response
+    {
+        $entityManager = $doctrine->getManager();
+        $quest = $doctrine->getRepository(Quest::class)->find($id);
+
+        if (!$quest) {
+            throw $this->createNotFoundException(
+                'Aucune quête ne correspond à l\'id ' . $id . '.'
+            );
+        }
+
+        $entityManager->remove($quest);
+        $entityManager->flush();
+
+        $this->addFlash(
+            "success",
+            'La quête "' . $quest->getTitle() . '" a bien été supprimée.'
+        );
+
+        return $this->redirect($this->generateUrl('index'));
+    }
+
+    /**
      * @Route("/{id}/participate", name="participate")
      *
      * @param ManagerRegistry $doctrine
@@ -82,10 +176,15 @@ class QuestController extends AbstractController
      */
     public function addPeopleToQuest(ManagerRegistry $doctrine, int $id): Response
     {
+        if (!$this->isGranted('ROLE_USER')) {
+            return $this->redirectToRoute("app_login");
+        }
+
         $entityManager = $doctrine->getManager();
+        /** @var Quest $quest */
         $quest = $doctrine->getRepository(Quest::class)->find($id);
 
-        $quest->setPeopleNumber($quest->getPeopleNumber()+1);
+        $quest->addParticipant($this->getUser());
 
         $entityManager->flush();
         $this->addFlash(

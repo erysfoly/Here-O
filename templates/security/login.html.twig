@@ -6,39 +6,48 @@
     {{ parent() }}
 
     <div class="container">
-        <div class="row">
-            <div class="login-form bg-light mt-4 p-4">
-                <form method="post" class="row g-3">
-                    <h1 class="h3 mb-3 font-weight-normal">Je me connecte !</h1>
-                    {% if error %}
-                        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+        <h2>Je me connecte !</h2>
+        <div class="w-50 mx-auto pt-4">
+            <form method="post">
+                {% if error %}
+                    <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                {% endif %}
+                <div class="py-1">
+                    <label for="inputUsername" class="form-label">Nom d'utilisateur</label>
+                    <input type="text" name="_username" id="inputUsername" class="form-control" value="{{ last_username }}" required autofocus>
+                </div>
+                <div class="py-1">
+                    <label for="inputPassword" class="form-label">Mot de passe</label>
+                    <input type="password" name="_password" id="inputPassword" class="form-control" required>
+                </div>
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+                {% set targetPath %}
+                    {% if "login" in app.request.headers.get('referer') or "register" in app.request.headers.get('referer') %}
+                        {{ app.request.headers.get('referer')|replace({'login': '', 'register': ''}) }}
+                    {% else %}
+                        {{ app.request.headers.get('referer') }}
                     {% endif %}
-                    <div class="col-12">
-                        <label for="inputUsername">Nom d'utilisateur</label>
-                        <input type="text" name="_username" id="inputUsername" class="form-control" value="{{ last_username }}" required autofocus>
-                    </div>
-                    <div class="col-12">
-                        <label for="inputPassword">Mot de passe</label>
-                        <input type="password" name="_password" id="inputPassword" class="form-control" required>
-                    </div>
-                    <input type="hidden" name="_csrf_token"
-                           value="{{ csrf_token('authenticate') }}"
-                    >
-                    <input type="hidden" name="_target_path"
-                           value="{{ app.request.headers.get('referer') }}"
-                    >
-                    <div class="form-check mb-3">
-                        <label>
-                            <input type="checkbox" name="_remember_me" class="form-check-input"> Se souvenir de moi ?
+                {% endset %}
+                <input type="hidden" name="_target_path" value="{{ targetPath|spaceless }}">
+
+                <div class="py-1">
+                    <div class="form-check">
+                        <label class="form-check-label">
+                            <input type="checkbox" name="_remember_me" class="form-check-input">Se souvenir de moi ?
                         </label>
                     </div>
-                    <div class="col-12">
-                        <button class="btn btn-lg btn-primary float-end" type="submit">
-                            Me connecter
-                        </button>
-                    </div>
-                </form>
-            </div>
+                </div>
+                <div class="small text-muted py-1">
+                    Tu as oublié ton mot de passe ? Clique sur le lien suivant pour demander à le changer : <a
+                            href="{{ path("app_forgot_password_request") }}">réinitialiser mon mot de passe</a>.
+                </div>
+                <div class="text-center pt-3">
+                    <button class="btn btn-lg btn-primary" type="submit">
+                        Me connecter
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 {% endblock %}

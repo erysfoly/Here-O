@@ -9,68 +9,17 @@
                         <h3>{{ quest.title }}</h3>
                         <p class="card-text">
                             {% if quest.description|length > 20 %}
-                                {{ quest.description | slice(0, 50) }}...
+                                {{ quest.description|slice(0, 50) }}...
                             {% else %}
                                 {{ quest.description }}
                             {% endif %}
                         </p>
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="btn-group">
-                                <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#detailModal{{ quest.id }}">See details</button>
-{#                                <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>#}
+                                <a class="btn btn-sm btn-outline-secondary" href="{{ path("quest_one", {id: quest.id}) }}">Voir les détails</a>
                             </div>
-                            <small class="text-muted">{{ quest.peopleNumber }} participant{{ quest.peopleNumber == 1 ? '.e' : 's' }}</small>
+                            <small class="text-muted">{{ quest.participants.count }} / {{ quest.maxPeopleNumber }} participant{{ quest.participants.count == 1 ? '.e' : '.e.s' }}</small>
                         </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Modal -->
-            <div class="modal fade" id="detailModal{{ quest.id }}" tabindex="-1" aria-labelledby="detailModal{{ quest.id }}Label" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="detailModal{{ quest.id }}Label">{{ quest.title }}</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
-                        </div>
-                        <div class="modal-body">
-                            <p>
-                                <strong>Auteur :</strong>
-                                {% if app.user != quest.author %}
-                                    {{ quest.author.userIdentifier }}
-                                {% else %}
-                                    toi ! <i class="far fa-heart"></i>
-                                {% endif %}
-                            </p>
-                            <p>
-                                <strong>Jour et heure :</strong>
-                                {{ quest.date|date("d/m/Y") }} at {{ quest.date|date("G:i") }}
-                            </p>
-                            <p>
-                                <strong>Lieu :</strong>
-                                {{ quest.place }}
-                            </p>
-                            <p>
-                                <strong>Nombre de participants :</strong>
-                                {{ quest.peopleNumber }}
-                                {% if app.user == quest.author %}
-                                    <br><small class="text-muted">N.B. : en tant qu'en organisateur.rice, tu n'es pas inclus.e dans les participants</small>
-                                {% endif %}
-                            </p>
-                            <p>
-                                <strong>Description :</strong><br/>
-                                {{ quest.description }}
-                            </p>
-                        </div>
-
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-
-                            {% if app.user != quest.author %}
-                                <a class="btn btn-primary" href="{{ path("quest_participate", {id: quest.id}) }}">Participer</a>
-                            {% endif %}
-                        </div>
-
                     </div>
                 </div>
             </div>

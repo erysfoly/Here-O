@@ -1,0 +1,70 @@
+{% extends "base.html.twig" %}
+
+{% block title %}{{ parent() }} | {{ quest.title }}{% endblock %}
+
+{% block body %}
+    {{ parent() }}
+
+    <div class="container">
+        <h2>{{ quest.title }}</h2>
+
+        <div class="row pt-4">
+            <div class="col">
+                <p>
+                    <img class="w-100" src="{{ quest.picture }}" alt="Nouvelle quête">
+                </p>
+
+                <p class="d-flex justify-content-center">
+                    {% if app.user == quest.author %}
+                        <a class="btn btn-outline-primary mx-2" href="{{ path("quest_edit", {id: quest.id}) }}">Editer</a>
+                        <a class="btn btn-outline-primary mx-2" href="{{ path("quest_delete", {id: quest.id}) }}">Supprimer</a>
+                    {% else %}
+                        <a class="btn btn-primary" href="{{ path("quest_participate", {id: quest.id}) }}">
+                            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                                Participer
+                            {% else %}
+                                Connecte-toi pour participer
+                            {% endif %}
+                        </a>
+                    {% endif %}
+                </p>
+            </div>
+            <div class="col">
+                <p>
+                    <strong>Auteur :</strong>
+                    {% if app.user != quest.author %}
+                        {{ quest.author.userIdentifier }}
+                    {% else %}
+                        toi ! <i class="far fa-heart"></i>
+                    {% endif %}
+                </p>
+                <p>
+                    <strong>Jour et heure :</strong>
+                    {{ quest.date|date("d/m/Y") }} at {{ quest.date|date("G:i") }}
+                </p>
+                <p>
+                    <strong>Lieu :</strong>
+                    {{ quest.place }}
+                </p>
+                <p>
+                    <strong>Nombre de participant.e.s (minimum {{ quest.minPeopleNumber }}) :</strong>
+                    {{ quest.participants.count }} / {{ quest.maxPeopleNumber }}
+                    {% if app.user == quest.author %}
+                        <br><small class="text-muted">N.B. : en tant qu'en organisateur.rice, tu n'es pas inclus.e dans les participant.e.s</small>
+                    {% endif %}
+                </p>
+                <p>
+                    <strong>Description :</strong><br/>
+                    {{ quest.description|nl2br }}
+                </p>
+            </div>
+        </div>
+        <div class="pt-5">
+            {% if "profile" in app.request.headers.get('referer') %}
+                <a href="{{ path("user_profile") }}"><i class="fas fa-arrow-left"></i> Retour à mon compte</a>
+            {% else %}
+                <a href="{{ path("index") }}"><i class="fas fa-arrow-left"></i> Retour à la liste des quêtes</a>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

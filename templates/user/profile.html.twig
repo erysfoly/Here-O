@@ -7,8 +7,48 @@
 
     <div class="container">
         <h2>Bienvenue {{ user.username }} !</h2>
-
-        {% include "quest/list.html.twig" %}
+        <div class="pt-4">
+            <nav class="nav">
+                <ul class="nav nav-tabs" id="myTab">
+                    <li class="nav-item" role="presentation">
+                        <button
+                                class="nav-link active"
+                                id="createdQuests-tab"
+                                data-bs-toggle="tab"
+                                data-bs-target="#createdQuests"
+                                type="button"
+                                role="tab"
+                                aria-controls="createdQuests"
+                                aria-selected="true"
+                        >
+                            Mes quêtes créées
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button
+                                class="nav-link"
+                                id="participatingQuests-tab"
+                                data-bs-toggle="tab"
+                                data-bs-target="#participatingQuests"
+                                type="button"
+                                role="tab"
+                                aria-controls="participatingQuests"
+                                aria-selected="false"
+                        >
+                            Je participe à ...
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="createdQuests" role="tabpanel" aria-labelledby="createdQuests-tab">
+                    {% include "quest/list.html.twig" with {quests:createdQuests} %}
+                </div>
+                <div class="tab-pane fade" id="participatingQuests" role="tabpanel" aria-labelledby="participatingQuests-tab">
+                    {% include "quest/list.html.twig" with {quests:participatingQuests} %}
+                </div>
+            </div>
+        </div>
     </div>
 
 {% endblock %}

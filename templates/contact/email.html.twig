@@ -1,0 +1,19 @@
+{% if copy is not defined %}
+    <p>Bonjour, vous avez reçu un nouveau message de {{ name }} :</p>
+
+    <p style="background-color: #dff7ff;">
+        {{ message|nl2br }}
+    </p>
+{% else %}
+    <p>Bonjour {{ name }} !</p>
+
+    <p>Merci pour ton message, nous te répondrons dès que possible.</p>
+
+    <p>Voici une copie de ton email :</p>
+
+    <p style="background-color: #dff7ff;">
+        {{ message|nl2br }}
+    </p>
+
+    <p>A bientôt dans la communauté <a href="{{ url("index") }}">Here#O</a> !</p>
+{% endif %}
