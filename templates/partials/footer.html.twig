@@ -2,14 +2,26 @@
 
     <footer class="text-muted py-5">
         <div class="container">
-            <p class="float-end mb-1">
-                <a href="#">Haut de page <i class="fas fa-arrow-up"></i></a>
-            </p>
-            <copyright>&copy; 2021-2022 Tarik et Cindy</copyright>
-            <p>
-                <a href="{{ path("legal_notices") }}">Mentions légales</a><br>
-                <a href="{{ path("privacy_policy") }}">Politique de confidentialité</a>
-            </p>
+            <div class="row">
+                <div class="col">
+                    <p class="text-start">&copy; 2021-2022 Tarik et Cindy<br>
+                        <a href="{{ path("legal_notices") }}">Mentions légales</a><br>
+                        <a href="{{ path("privacy_policy") }}">Politique de confidentialité</a>
+                    </p>
+                </div>
+                <div class="col">
+                    <p class="text-center">
+                        <a href="{{ path("about") }}">A propos de Here#O</a><br>
+                        <a href="{{ path("contact") }}">Contactez-nous</a>
+                    </p>
+                </div>
+                <div class="col">
+                    <p class="text-end">
+                        <a href="#">Haut de page <i class="fas fa-arrow-up"></i></a>
+                    </p>
+                </div>
+            </div>
+
         </div>
     </footer>
 {% endblock %}
