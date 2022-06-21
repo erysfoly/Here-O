@@ -16,7 +16,7 @@
                         </p>
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="btn-group">
-                                <a class="btn btn-sm btn-outline-secondary" href="{{ path("quest_one", {id: quest.id}) }}">Voir les détails</a>
+                                <a class="btn btn-sm btn-outline-primary" href="{{ path("quest_one", {id: quest.id}) }}">Voir les détails</a>
                             </div>
                             <small class="text-muted">{{ quest.participants.count }} / {{ quest.maxPeopleNumber }} participant{{ quest.participants.count == 1 ? '.e' : '.e.s' }}</small>
                         </div>

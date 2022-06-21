@@ -1,27 +1,101 @@
 /** Global CSS **/
+body, a {
+    color: #001617 !important;
+}
+
+a:hover {
+    color: #5caba6 !important;
+}
+
 h2,h3 {
     text-align: center;
+}
+
+footer a {
+    color:#6c757d !important;
+}
+
+header a:hover {
+    color:#fff !important;
+}
+
+footer a:hover {
+    color:#001617 !important;
 }
 
 .captcha_image {
     margin-bottom: 0.5rem;
 }
 
-/** New quest form **/
+.bg-hereo {
+    background-color: #75d1dc !important;
+}
 
-#new_quest_form_picture .form-check {
+.btn-primary {
+    color: #001617 !important;
+    background-color: #75d1dc !important;
+    border-color: #75d1dc !important;
+}
+.btn-primary:hover,
+.btn-outline-primary:hover {
+    color: #001617 !important;
+    background-color: #a9d6db !important;
+    border-color: #a9d6db !important;
+}
+.btn-primary:active,
+.btn-primary:focus,
+.btn-outline-primary:active,
+.btn-outline-primary:focus{
+    color: #001617 !important;
+    background-color: #a9d6db !important;
+    border-color: #a9d6db !important;
+    box-shadow: 0 0 0 .25rem rgba(169,214,219,.5) !important;
+}
+
+.btn-outline-primary {
+    color: #001617 !important;
+    border-color: #001617 !important;
+}
+
+.dropdown-item,
+.dropdown-item:hover,
+.dropdown-item:active,
+.dropdown-item:focus {
+    color: #001617 !important;
+}
+
+.dropdown-item:active,
+.dropdown-item:focus {
+    background-color: #e9ecef !important;
+}
+
+.nav-tabs .nav-link {
+    color: #001617 !important;
+}
+
+.border-primary {
+    border-color: #75d1dc !important;
+}
+
+/** New/Edit quest form **/
+
+#new_quest_form_picture .form-check,
+#edit_quest_form_picture .form-check {
     padding: 0.2em;
 }
 
-#new_quest_form_picture input {
+#new_quest_form_picture input,
+#edit_quest_form_picture input {
     display: none;
 }
 
-#new_quest_form_picture label {
+#new_quest_form_picture label,
+#edit_quest_form_picture label {
     cursor: pointer;
     border-radius: 5%;
 }
 
-#new_quest_form_picture label.selected img.border {
+#new_quest_form_picture label.selected img.border,
+#edit_quest_form_picture label.selected img.border {
     border-width: 0.2rem !important;
 }
