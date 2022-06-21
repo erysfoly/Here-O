@@ -1,3 +1,15 @@
 index:
     path: /
     controller: App\Controller\QuestController::showAction
+
+legal_notices:
+    path:          /legal-notices
+    controller:    Symfony\Bundle\FrameworkBundle\Controller\TemplateController
+    defaults:
+        template:  'rgpd/legal_notices.html.twig'
+
+privacy_policy:
+    path:          /privacy-policy
+    controller:    Symfony\Bundle\FrameworkBundle\Controller\TemplateController
+    defaults:
+        template:  'rgpd/privacy_policy.html.twig'
