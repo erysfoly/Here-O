@@ -40,7 +40,7 @@
             {{ form_start(registrationForm) }}
 
             {{ form_row(registrationForm.username, {
-                label:"Nom d'utilisateur"
+                label:"Nom d'utilisateur.rice"
             }) }}
 
             {{ form_row(registrationForm.email, {
@@ -54,9 +54,12 @@
             {{ form_row(registrationForm.plainPassword.second, {
                 label: 'Confirmation du mot de passe'
             }) }}
-
+            {% set labelTerms %}
+                J'accepte les <a href="{{ path('legal_notices') }}">conditions d'utilisation du site</a>
+            {% endset %}
             {{ form_row(registrationForm.agreeTerms, {
-                label: "J'accepte les conditions d'utilisation du site"
+                label: labelTerms,
+                label_html: true
             }) }}
 
             <div class="py-1">

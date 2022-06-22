@@ -40,11 +40,15 @@
                 </p>
                 <p>
                     <strong>Jour et heure :</strong>
-                    {{ quest.date|date("d/m/Y") }} at {{ quest.date|date("G:i") }}
+                    {{ quest.date|date("d/m/Y") }} à {{ quest.date|date("G:i") }}
                 </p>
                 <p>
                     <strong>Lieu :</strong>
-                    {{ quest.place }}
+                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                        {{ quest.place }}
+                    {% else %}
+                        Connecte-toi pour voir où a lieu cette quête
+                    {% endif %}
                 </p>
                 <p>
                     <strong>Nombre de participant.e.s (minimum {{ quest.minPeopleNumber }}) :</strong>

@@ -11,8 +11,16 @@
             </p>
             {{ form_start(deleteAccountForm) }}
 
+            {% set labelSentence %}
+                <p>Recopie la phrase suivante pour garantir ta volonté de supprimer ton compte :</p>
+                <p class="fw-bold text-center">{{ constant('App\\Controller\\UserController::DELETE_ACCOUNT_SENTENCE') }}</p>
+            {% endset %}
             {{ form_row(deleteAccountForm.validateDeletion, {
-                label: 'Recopie la phrase suivante pour garantir ta volonté de supprimer ton compte : "' ~ constant('App\\Controller\\UserController::DELETE_ACCOUNT_SENTENCE') ~ '".'
+                label: labelSentence,
+                label_html: true,
+                label_attr: {
+                    class: "w-100"
+                }
             }) }}
 
             {{ form_row(deleteAccountForm.confirm, {
